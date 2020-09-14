@@ -40,7 +40,7 @@ class _ResultState extends State<Result>
             ),
             SizedBox(height:20.0),
             Text(
-              'TO BE ADDED',
+              data['speedScore'].toString(),
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 50.0),

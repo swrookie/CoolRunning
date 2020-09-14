@@ -111,16 +111,16 @@ class _HomeState extends State<Home> with WidgetsBindingObserver
             ),
             SizedBox(height:50.0),
             Text(
-              'Difficulty Level   $_currentDifficulty',
+              'Difficulty Level   $_currentDifficulty KM/H',
               style: TextStyle(fontSize: 20.0),
             ),
             SizedBox(height:20.0),
             Slider(
               value: _currentDifficulty.toDouble(),
               min: 1.0,
-              max: 11.0,
-              divisions: 10,
-              label: 'Starting Speed: $_currentDifficulty m/s',
+              max: 12.0,
+              divisions: 11,
+              label: 'Starting Speed: $_currentDifficulty KM/H',
               onChanged: (double val) {
                 setState(() {
                   _currentDifficulty = val.round();
