@@ -16,7 +16,7 @@ class _MapRoutesState extends State<MapRoutes>
 {
   //final Completer<GoogleMapController> _controllerCompleter = Completer();
 
-  final Map<String, Marker> _markers = {};
+  /*final Map<String, Marker> _markers = {};
   Future<void> mapCreated(GoogleMapController controller) async
   {
     final googleOffices = await locations.getGoogleOffices();
@@ -34,11 +34,11 @@ class _MapRoutesState extends State<MapRoutes>
         _markers[office.name] = marker;
       }
     });
-  }
+  }*/
 
   GoogleMapController mapController;
-  final double _originLatitude = 6.5212402, _originLongitude = 3.3679965;
-  final double _destLatitude = 6.849660, _destLongitude = 3.648190;
+  final double _originLatitude = SpeedMonitor.getStartCoord()[0], _originLongitude = SpeedMonitor.getStartCoord()[1];
+  final double _destLatitude = SpeedMonitor.getDestCoord()[0], _destLongitude = SpeedMonitor.getDestCoord()[1];
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
@@ -78,7 +78,10 @@ class _MapRoutesState extends State<MapRoutes>
     Marker marker = Marker(
       markerId: markerId,
       icon: descriptor,
-      position: position
+      position: position,
+      infoWindow: InfoWindow(
+        snippet: '${position.latitude} - ${position.longitude}',
+      ),
     );
     markers[markerId] = marker;
   }
@@ -117,9 +120,6 @@ class _MapRoutesState extends State<MapRoutes>
   @override
   Widget build(BuildContext context)
   {
-    print('Starting coordinates saved in speed monitor class: ${SpeedMonitor.getStartCoord()}');
-    print('Ending coordinates saved in speed monitor class: ${SpeedMonitor.getDestCoord()}');
-
     return Scaffold(
       appBar: titleAppBar,
       body: GoogleMap(

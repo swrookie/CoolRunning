@@ -1,4 +1,4 @@
-package com.example.flutter_coolrunning
+package com.swrookie.flutter_coolrunning
 
 import io.flutter.embedding.android.FlutterActivity
 

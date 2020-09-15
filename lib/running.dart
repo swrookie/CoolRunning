@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_coolrunning/constants.dart';
+import 'package:flutter_coolrunning/loading.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:audioplayers/audio_cache.dart';
@@ -22,9 +23,11 @@ class _RunningState extends State<Running>
   Position _position;
   double currentSpeed = 0.0;
   double targetSpeed = 0.0;
+  bool preparation = false;
+  bool loading = true;
   AudioPlayer player = AudioPlayer();
   AudioCache cache;
-  /// Timer timer;
+  // Timer timer;
   SpeedMonitor speedMonitor = SpeedMonitor(runType: RunningType.start, errorType: ErrorType.correct);
   final Stream<Position> _positionStream = GeolocatorPlatform.instance.getPositionStream();
   final String _slowDownSound = 'slow_down.mp3';
@@ -125,8 +128,15 @@ class _RunningState extends State<Running>
                         builder: (context, snapshot) {
                           if (snapshot.hasData)
                           {
+                            loading = false;
                             _position = snapshot.data;
                             currentSpeed = _position.speed * 3.6;
+                            if (preparation == true)
+                            {
+                              SpeedMonitor.setStartLatLng(_position?.latitude, _position?.longitude);
+                              print('Starting coordinate: ${SpeedMonitor.getStartCoord()}');
+                              preparation = !preparation;
+                            }
                             if (speedMonitor.getRunType() == RunningType.running)
                             {
                               checkMonitor();
@@ -182,11 +192,12 @@ class _RunningState extends State<Running>
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () async {
+                              preparation = true;
+                              /*SpeedMonitor.setStartLatLng(_position?.latitude, _position?.longitude);
+                              print('Starting coordinate: ${SpeedMonitor.getStartCoord()}');*/
                               _stopWatchTimer.onExecute.add(StopWatchExecute.start);
                               speedMonitor.setRunType(RunningType.running);
                               print('State after start is pressed ' + speedMonitor.getRunType().toString());
-                              SpeedMonitor.setStartLatLng(_position?.latitude, _position?.longitude);
-                              print('Starting coordinate: ${SpeedMonitor.getStartCoord()}');
                             },
                           ),
                         ),
