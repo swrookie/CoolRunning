@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_coolrunning/constants.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -88,7 +87,7 @@ class _MapRoutesState extends State<MapRoutes>
 
   void _addPolyLine()
   {
-    PolylineId id = PolylineId("poly");
+    PolylineId id = PolylineId('poly');
     Polyline polyline = Polyline(
       polylineId: id,
       color: Colors.blue,
