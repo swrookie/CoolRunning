@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_coolrunning/constants.dart';
+//import 'package:flutter_coolrunning/locations.dart';
+//import 'package:flutter_coolrunning/locations.dart' as locations;
+/*import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong/latlong.dart';*/
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:flutter_coolrunning/locations.dart' as locations;
 import 'package:flutter_coolrunning/speed_monitor.dart';
 
 class MapRoutes extends StatefulWidget
@@ -13,8 +16,6 @@ class MapRoutes extends StatefulWidget
 
 class _MapRoutesState extends State<MapRoutes>
 {
-  //final Completer<GoogleMapController> _controllerCompleter = Completer();
-
   /*final Map<String, Marker> _markers = {};
   Future<void> mapCreated(GoogleMapController controller) async
   {
@@ -36,19 +37,25 @@ class _MapRoutesState extends State<MapRoutes>
   }*/
 
   GoogleMapController mapController;
-  final double _originLatitude = SpeedMonitor.getStartCoord()[0], _originLongitude = SpeedMonitor.getStartCoord()[1];
-  final double _destLatitude = SpeedMonitor.getDestCoord()[0], _destLongitude = SpeedMonitor.getDestCoord()[1];
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
-  String googleAPiKey = 'AIzaSyDL1BPavdJ8ILb31PV8ZeLZjxhq53-6UPo';
+  List<LatLng> points = SpeedMonitor.getCoordinates();
+  double _originLatitude = 0.0;
+  double _originLongitude = 0.0;
+  double _destLatitude = 0.0;
+  double _destLongitude = 0.0;
+  final String googleAPIKey = 'AIzaSyDL1BPavdJ8ILb31PV8ZeLZjxhq53-6UPo';
 
   @override
   void initState()
   {
     super.initState();
-    //getPoints();
+    _originLatitude = points[0].latitude;
+    _originLongitude = points[0].longitude;
+    _destLatitude = points[points.length - 1].latitude;
+    _destLongitude = points[points.length - 1].longitude;
 
     /// origin marker
     _addMarker(
@@ -73,24 +80,22 @@ class _MapRoutesState extends State<MapRoutes>
 
   void _addMarker(LatLng position, String id, BitmapDescriptor descriptor)
   {
-    MarkerId markerId = MarkerId(id);
-    Marker marker = Marker(
+    var markerId = MarkerId(id);
+    var marker = Marker(
       markerId: markerId,
       icon: descriptor,
       position: position,
-      infoWindow: InfoWindow(
-        snippet: '${position.latitude} - ${position.longitude}',
-      ),
     );
     markers[markerId] = marker;
   }
 
   void _addPolyLine()
   {
-    PolylineId id = PolylineId('poly');
-    Polyline polyline = Polyline(
+    var id = PolylineId('poly');
+    var polyline = Polyline(
       polylineId: id,
       color: Colors.blue,
+      width: 7,
       points: polylineCoordinates,
     );
     polylines[id] = polyline;
@@ -99,11 +104,14 @@ class _MapRoutesState extends State<MapRoutes>
 
   void _getPolyline() async
   {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      googleAPiKey,
+    /// Commented code is for getting navigation between two points
+    /// Not suitable for usage in South Korea
+
+    /*PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleAPIKey,
       PointLatLng(_originLatitude, _originLongitude),
       PointLatLng(_destLatitude, _destLongitude),
-      travelMode: TravelMode.walking,
+      travelMode: TravelMode.driving,
     );
 
     if (result.points.isNotEmpty)
@@ -112,7 +120,12 @@ class _MapRoutesState extends State<MapRoutes>
       {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
-    }
+    }*/
+
+    points.forEach((point)
+    {
+      polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+    });
     _addPolyLine();
   }
 
@@ -132,6 +145,7 @@ class _MapRoutesState extends State<MapRoutes>
         myLocationEnabled: true,
         tiltGesturesEnabled: true,
         scrollGesturesEnabled: true,
+        zoomGesturesEnabled: true,
       ),
     );
   }

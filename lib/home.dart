@@ -188,8 +188,13 @@ class _HomeState extends State<Home> with WidgetsBindingObserver
             SizedBox(height: 100.0),
             Align(
               child: RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-                padding: EdgeInsets.all(0.0),
+                padding: EdgeInsets.all(7.0),
+                color: Colors.lightBlue,
+                shape: StadiumBorder(),
+                child: Text(
+                  'PREPARE RUNNING',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   if (_permissionGranted)
                   {
@@ -201,33 +206,15 @@ class _HomeState extends State<Home> with WidgetsBindingObserver
                   else
                   {
                     Fluttertoast.showToast(
-                      msg: 'Please enable location service',
+                      msg: 'PLEASE ENABLE LOCATION SERVICE FROM SETTINGS',
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.BOTTOM,
-                      backgroundColor: Colors.red[200],
+                      backgroundColor: Colors.redAccent,
                       textColor: Colors.white,
                       fontSize: 15.0
                     );
-                  }
-                  //print('Button Works!');
+                  };
                 },
-                child: Ink(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: <Color>[
-                        Colors.cyan,
-                        Colors.cyanAccent,
-                        Colors.blueAccent,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                  ),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    'PREPARE RUNNING',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
               ),
             ),
           ],

@@ -15,7 +15,6 @@ class _ResultState extends State<Result>
   Widget build(BuildContext context)
   {
     data = ModalRoute.of(context).settings.arguments;
-    //print(data);
 
     return Scaffold(
       appBar: titleAppBar,
@@ -46,28 +45,16 @@ class _ResultState extends State<Result>
             SizedBox(height: 50.0),
             Align(
               child: RaisedButton(
+                padding: EdgeInsets.all(4.0),
+                color: Colors.lightBlue,
+                shape: StadiumBorder(),
+                child: Text(
+                  'START AGAIN',
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/');
                 },
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: <Color>[
-                        Colors.cyan,
-                        Colors.cyanAccent,
-                        Colors.blueAccent,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                  ),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    'START AGAIN',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
               ),
             ),
           ],
@@ -80,7 +67,7 @@ class _ResultState extends State<Result>
         child: Icon(
           Icons.map,
         ),
-        backgroundColor: Colors.cyan[300],
+        backgroundColor: Colors.lightBlue
       ),
     );
   }

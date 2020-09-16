@@ -1,3 +1,5 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 enum ErrorType
 {
   tooSlow,
@@ -22,6 +24,7 @@ class SpeedMonitor
 
   static double _originLatitude, _originLongitude;
   static double _destLatitude, _destLongitude;
+  static List<LatLng> coordinates = [];
   double speedScore = 0.0;
   double speedError = 0.0;
   double toleranceThreshold = 1.0;
@@ -29,6 +32,16 @@ class SpeedMonitor
   double badComparisons = 0.0;
   RunningType runType;
   ErrorType errorType;
+
+  static void addCoordinates(double latitude, double longitude)
+  {
+    coordinates.add(LatLng(latitude, longitude));
+  }
+
+  static List<LatLng> getCoordinates()
+  {
+    return coordinates;
+  }
 
   double getScore()
   {
@@ -62,32 +75,6 @@ class SpeedMonitor
   void setRunType(RunningType runType)
   {
     this.runType = runType;
-  }
-
-  static List<double> getStartCoord()
-  {
-    var startCoords = [_originLatitude, _originLongitude];
-
-    return startCoords;
-  }
-
-  static List<double> getDestCoord()
-  {
-    var destCoords = [_destLatitude, _destLongitude];
-
-    return destCoords;
-  }
-
-  static void setStartLatLng(double originLatitude, double originLongitude)
-  {
-    _originLatitude = originLatitude;
-    _originLongitude = originLongitude;
-  }
-
-  static void setDestLatLng(double destLatitude, double destLongitude)
-  {
-    _destLatitude = destLatitude;
-    _destLongitude = destLongitude;
   }
 
   void compareSpeed(double currentSpeed, double targetSpeed) async

@@ -11,7 +11,7 @@ const textInputDecoration = InputDecoration(
 );
 
 var titleAppBar = AppBar(
-  backgroundColor: Colors.cyan[300],
+  backgroundColor: Colors.lightBlue,
   title: Text('CoolRunning'),
   centerTitle: true,
 );
