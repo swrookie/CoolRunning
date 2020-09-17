@@ -1,6 +1,6 @@
 # flutter_coolrunning
 
-Cross Platform app using Flutter of CoolRunning project from CNIT 35500
+Cross Platform mobile running application with Flutter SDK using CoolRunning project from 2019 CNIT 35500 Class Project.
 
 ## Getting Started
 
@@ -14,3 +14,13 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Todos
+
+1. Save running settings when pressing prepare running button.
+2. Run app as a service in background.
+3. Maybe put animated background based on weather conditions.
+
+## Current Issues
+
+1. GPS sometimes indicating user is still moving when standing still.
