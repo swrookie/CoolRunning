@@ -1,6 +1,6 @@
-# flutter_coolrunning
+# CoolRunning
 
-Cross Platform mobile running application with Flutter SDK using CoolRunning project from 2019 CNIT 35500 Class Project.
+Cross Platform mobile running application developed with Flutter SDK using CoolRunning project from 2019 CNIT 35500 Class Project.
 
 ## Getting Started
 
